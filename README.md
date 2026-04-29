@@ -7,7 +7,7 @@ Bu, [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-nex
 ```bash
 npm run dev
 # veya
-iplik geliştirme
+yarn dev
 # veya
 pnpm dev
 # veya
