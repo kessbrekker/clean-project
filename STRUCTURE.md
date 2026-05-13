@@ -1,76 +1,136 @@
-# 📂 Proje Klasör Yapısı (Master Template)
+# 🚀 Ultimate Next.js (App Router) Project Structure
 
-Bu yapı, ölçeklenebilir, bakımı kolay ve modern Next.js (App Router) standartlarına uygun olarak tasarlanmıştır.
+Bu yapı; temiz kod prensipleri (Clean Code), özellik tabanlı ayrıştırma (Feature-based slicing) ve Next.js'in en gelişmiş yeteneklerini desteklemek üzere tasarlanmıştır.
 
 ```text
-src/
-├── app/                    # ROUTING & PAGES (Next.js App Router)
-│   ├── (auth)/             # Route Group: URL'de gözükmez, mantıksal gruplama (örn: /login)
-│   │   ├── login/
-│   │   └── register/
-│   ├── (dashboard)/        # Route Group: Panel sayfaları ve ortak layoutlar
-│   │   ├── layout.tsx      # Dashboard'a özel sidebar, navbar vb.
-│   │   └── profile/
-│   ├── api/                # API Route Handlers (Backend endpointleri)
-│   ├── layout.tsx          # Global Root Layout (Html, Body, Fontlar)
-│   ├── page.tsx            # Ana Sayfa (Landing Page)
-│   ├── error.tsx           # Global hata yakalama sayfası
-│   └── loading.tsx         # Global loading skeletonları
+.
+├── .github/                # CI/CD Workflows, Issue Templates
+├── .husky/                  # Git Hooks (Pre-commit linting/testing)
+├── public/                 # Statik dosyalar (Favicon, robots.txt, manifest.json)
+│   ├── fonts/              # Local font dosyaları
+│   ├── icons/              # SVG icon setleri
+│   └── images/             # Optimize edilmemiş statik görseller
 │
-├── components/             # SHARED COMPONENTS (Genel UI Bileşenleri)
-│   ├── ui/                 # Atomik bileşenler (Shadcn/UI, Button, Input, Modal)
-│   ├── forms/              # Genel form elemanları (React Hook Form yapıları)
-│   ├── layout/             # Genel Header, Footer, Sidebar bileşenleri
-│   └── common/             # Çok amaçlı minik bileşenler (Spinner, Badge)
+├── src/
+│   ├── app/                # 📂 ROUTING LAYER (Next.js App Router)
+│   │   ├── (auth)/         # Route Group: Kimlik doğrulama akışları
+│   │   │   ├── login/
+│   │   │   └── register/
+│   │   ├── (dashboard)/    # Route Group: Uygulama içi yönetim paneli
+│   │   │   ├── @analytics/ # Parallel Route: Aynı anda yüklenen dashboard slotu
+│   │   │   ├── @notifications/
+│   │   │   ├── layout.tsx
+│   │   │   └── page.tsx
+│   │   ├── (shop)/         # Route Group: E-ticaret / Ürün akışları
+│   │   │   ├── products/
+│   │   │   │   ├── [id]/   # Dynamic Route: Ürün detay
+│   │   │   │   │   └── (...)photo/ # Intercepting Route: Modal ile ürün resmi açma
+│   │   │   └── page.tsx
+│   │   ├── api/            # API Route Handlers (Edge/Node.js Functions)
+│   │   │   ├── auth/[...nextauth]/
+│   │   │   └── webhooks/   # Stripe, Clerk vb. için webhooklar
+│   │   ├── apple-icon.png  # Dinamik metadata dosyaları
+│   │   ├── error.tsx       # Global Error Boundary
+│   │   ├── global-error.tsx # Root layout hataları için özel dosya
+│   │   ├── layout.tsx      # Root Layout (Providers burada sarmalanır)
+│   │   ├── loading.tsx     # Global Streaming (Suspense)
+│   │   ├── not-found.tsx   # 404 Sayfası
+│   │   └── page.tsx        # Landing Page
+│   │
+│   ├── actions/            # ⚡ GLOBAL SERVER ACTIONS (Shared across features)
+│   │   ├── email-actions.ts
+│   │   └── upload-actions.ts
+│   │
+│   ├── components/         # 🧱 SHARED UI COMPONENTS
+│   │   ├── ui/             # Shadcn/UI (Atomik, düşük seviyeli bileşenler)
+│   │   ├── forms/          # Genel form yapıları (React Hook Form + Zod)
+│   │   ├── layout/         # Navigation, Sidebar, Footer, UserMenu
+│   │   ├── animations/     # Framer Motion sarmalayıcıları
+│   │   ├── feedback/       # Toast, Dialog, Skeleton loaderlar
+│   │   └── table/          # Data-table soyutlamaları (TanStack Table)
+│   │
+│   ├── features/           # 🧩 DOMAIN-DRIVEN MODULES (Business Logic)
+│   │   ├── [feature-name]/
+│   │   │   ├── actions.ts  # Feature-specific Server Actions
+│   │   │   ├── api/        # Fetchers, React Query hooks
+│   │   │   ├── components/ # Bu özelliğe has UI (örn: CartItem, OrderSummary)
+│   │   │   ├── constants.ts
+│   │   │   ├── hooks.ts    # useCart, useOrderManagement vb.
+│   │   │   ├── schemas.ts  # Zod validation şemaları
+│   │   │   ├── types.ts    # TypeScript interfaces
+│   │   │   └── index.ts    # Public API (Sadece gerekli olanları dışarı aç)
+│   │
+│   ├── config/             # ⚙️ CONFIGURATION & ENV VALIDATION
+│   │   ├── env.ts          # Zod ile Process.env doğrulaması (Type-safe env)
+│   │   ├── site-config.ts  # SEO, Metadata, Sosyal linkler
+│   │   └── constants.ts    # App-wide sabitler
+│   │
+│   ├── db/                 # 🗄️ DATABASE LAYER (ORM)
+│   │   ├── schema/         # Drizzle/Prisma schema tanımları
+│   │   ├── migrations/     # SQL göç dosyaları
+│   │   ├── seed.ts         # Test verisi oluşturma
+│   │   └── index.ts        # Database client (Singleton)
+│   │
+│   ├── hooks/              # ⚓ GLOBAL CUSTOM HOOKS
+│   │   ├── use-media-query.ts
+│   │   ├── use-mounted.ts
+│   │   └── use-click-outside.ts
+│   │
+│   ├── lib/                # 📚 SDK & THIRD PARTY WRAPPERS
+│   │   ├── stripe.ts       # Stripe client config
+│   │   ├── resend.ts       # E-mail servis ayarları
+│   │   ├── redis.ts        # Caching/Rate limiting
+│   │   └── utils.ts        # Tailwind merge (cn), formatters vb.
+│   │
+│   ├── middleware.ts       # Auth guard, i18n redirect, logging
+│   │
+│   ├── providers/          # 🌐 CONTEXT PROVIDERS (Client-side)
+│   │   ├── theme-provider.tsx # Next-themes (Dark mode)
+│   │   ├── query-provider.tsx # TanStack Query
+│   │   └── auth-provider.tsx  # NextAuth/Clerk Session
+│   │
+│   ├── services/           # 🛠️ EXTERNAL SERVICES (Abstraction layer)
+│   │   ├── storage-service.ts # S3/Cloudinary soyutlaması
+│   │   └── payment-service.ts
+│   │
+│   ├── styles/             # 🎨 STYLING
+│   │   └── globals.css     # Tailwind katmanları (@layer)
+│   │
+│   ├── types/              # 🏷️ GLOBAL TYPES
+│   │   └── common.ts       # API responses, Pagination types
+│   │
+│   └── utils/              # 🔧 PURE HELPER FUNCTIONS
+│       ├── date.ts         # Dayjs/Date-fns helpers
+│       └── number.ts       # Currency/Unit formatters
 │
-├── features/               # FEATURE-BASED MODULES (Uygulamanın Kalbi)
-│   ├── [feature-name]/     # Örn: 'cart', 'products', 'auth'
-│   │   ├── api/            # O özelliğe özel fetch fonksiyonları / server actions
-│   │   ├── components/     # O özelliğe özel karmaşık UI (ProductCard, CartList)
-│   │   ├── hooks/          # O özelliğe özel logicler (useCart, useProductFilter)
-│   │   ├── types/          # TypeScript interface/type tanımları
-│   │   └── index.ts        # Public API: Dışarıya açılacak olanları buradan export et
+├── tests/                  # 🧪 TESTING SUITE
+│   ├── unit/               # Vitest / Jest (Logic tests)
+│   ├── integration/        # Component tests
+│   └── e2e/                # Playwright / Cypress (User flows)
 │
-├── hooks/                  # GLOBAL HOOKS (Birden fazla feature tarafından kullanılanlar)
-│   ├── use-debounce.ts
-│   ├── use-local-storage.ts
-│   └── use-window-size.ts
-│
-├── lib/                    # SDK & CONFIG (Dış kütüphane konfigürasyonları)
-│   ├── prisma.ts           # Veritabanı clientı
-│   ├── stripe.ts           # Ödeme sistemleri
-│   ├── lucia.ts            # Auth kütüphanesi ayarları
-│   └── utils.ts            # Shadcn'in kullandığı 'cn' gibi yardımcılar
-│
-├── services/               # GLOBAL SERVICES (Feature dışı genel dış servisler)
-│   └── mail-service.ts
-│
-├── store/                  # STATE MANAGEMENT (Global state: Zustand, Redux vb.)
-│   └── use-global-store.ts
-│
-├── types/                  # GLOBAL TYPES (Uygulama genelinde paylaşılan tipler)
-│   └── index.d.ts
-│
-├── utils/                  # HELPERS (Saf fonksiyonlar - Pure Functions)
-│   ├── format-date.ts
-│   ├── format-currency.ts
-│   └── validate-email.ts
-│
-├── providers/              # CONTEXT PROVIDERS (Client-side sarmalayıcılar)
-│   ├── theme-provider.tsx
-│   ├── query-provider.tsx  # React Query gibi yapılar için
-│   └── auth-provider.tsx
-│
-└── styles/                 # STYLES (Global CSS)
-    └── globals.css
+├── .env.example            # Çevre değişkenleri şablonu
+├── next.config.mjs         # Next.js ana ayarları (Redirects, Image domains)
+├── tailwind.config.ts      # Tasarım sistemi ayarları
+└── tsconfig.json           # Path Aliases (@/* -> src/*)
 ```
 
 ---
 
-## 🛠 Temel Kurallar ve İpuçları
+## 💎 Profesyonel Mimari Prensipler
 
-1. **Colocation (Yakınlık İlkesi):** Bir dosya sadece bir yerde kullanılıyorsa, onu kullandığın yere en yakın klasörde tut. Eğer başka yerler de ihtiyaç duyarsa yukarıdaki genel klasörlere (`components`, `hooks` vb.) taşı.
-2. **Features Klasörü:** Uygulamanın asıl iş mantığı burada döner. Bir feature klasörü kendi içinde bağımsız olmalıdır. Mesela `features/cart` klasörünü kopyalayıp başka projeye attığında minimum değişiklikle çalışabilmelidir.
-3. **Route Groups `()`:** Klasör isimlerini parantez içinde yazmak URL yapısını bozmaz. Projeyi bölümlere ayırmak (Auth sayfaları vs. Mağaza sayfaları) için mükemmeldir.
-4. **Shadcn/UI Kullanımı:** Shadcn bileşenlerini her zaman `components/ui` altında tut. Onlara dokunmaktan korkma, onlar artık senin kodun!
-5. **Index.ts Kullanımı:** Feature klasörleri içindeki `index.ts` dosyaları bir "kapı" görevi görür. Dışarıdaki bir dosya o feature içinden bir şey import edecekse sadece `index.ts` üzerinden erişmelidir.
+### 1. Server Actions vs. API Routes
+*   **Actions:** Form gönderimleri ve kullanıcı etkileşimli veri değişiklikleri için `src/features/[feature]/actions.ts` kullanılır.
+*   **API Routes:** Webhooklar, üçüncü parti entegrasyonlar veya mobil uygulamalar gibi dış sistemlerin erişeceği endpointler için `src/app/api` kullanılır.
+
+### 2. Parallel ve Intercepting Routes
+Modern dashboard tasarımlarında; bir sayfayı (örn: `/settings`) mevcut sayfanın üzerinde modal olarak açmak (`(.)settings`) veya sayfanın farklı bölümlerini farklı loading stateleri ile asenkron yüklemek (`@analytics`) için bu yapı kritiktir.
+
+### 3. Type-Safe Environment Variables
+`src/config/env.ts` içinde **Zod** kullanarak `.env` dosyandaki değişkenleri doğrula. Böylece eksik bir API anahtarı olduğunda uygulama build sırasında hata verir, runtime'da çökmez.
+
+### 4. Module Boundaries (Giriş/Çıkış Kontrolü)
+`features/` altındaki bir klasör, başka bir feature'ın içindeki bir dosyayı derinlemesine import etmemelidir. İhtiyaç duyulan her şey `features/[feature]/index.ts` üzerinden export edilmeli ve oradan tüketilmelidir.
+
+### 5. Database & ORM Soyutlaması
+Veritabanı mantığını `src/db` altında toplamak, yarın bir gün Prisma'dan Drizzle'a (veya tam tersi) geçerken uygulamanın geri kalanını korumanı sağlar.
+```
