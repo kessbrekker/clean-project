@@ -1,36 +1,45 @@
-Bu, [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app) ile önyüklenmiş bir [Next.js](https://nextjs.org) projesidir.
+# 📘 Proje Geliştirme Standartları & Rehber
 
-## Başlarken
+Bu depo, projemizdeki geliştirme süreçlerini standartlaştırmak, yeni ekip üyelerinin adaptasyonunu (onboarding) hızlandırmak ve kod kalitesini en üst seviyede tutmak için oluşturulmuş **merkezi bilgi kaynağıdır.**
 
-İlk olarak, geliştirme sunucusunu çalıştırın:
+Lütfen geliştirmeye başlamadan önce ilgili dokümanları gözden geçirin.
+
+---
+
+## 🏗️ Dokümantasyon Dizini
+
+Aşağıdaki bağlantılar üzerinden projenin farklı alanlarındaki standartlarımıza ulaşabilirsiniz:
+
+| Dosya | Açıklama |
+| :--- | :--- |
+| [**GIT.md**](./GIT.md) | Git akışı, commit mesajı standartları ve PR süreçleri. |
+| [**STRUCTURE.md**](./STRUCTURE.md) | Proje klasör yapısı ve dosya isimlendirme kuralları. |
+| [**PNPM.md**](./PNPM.md) | Paket yönetimi ve `pnpm` özelindeki iş akışımız. |
+| [**ICONS.md**](./ICONS.md) | React ve Next.js projelerinde ikon kullanımı ve optimizasyonu. |
+| [**SHADCNUI.md**](./SHADCNUI.md) | UI bileşenlerinin kullanımı ve özelleştirme rehberi. |
+| [**LARAVEL.md**](./LARAVEL.md) | Laravel ile React/Next.js entegrasyonu ve API standartları. |
+| [**SEMANTIC.md**](./SEMANTIC.md) | Versiyonlama (Versioning) ve sürüm yönetimi kuralları. |
+
+---
+
+## 🚀 Temel İlkelerimiz
+
+1.  **Tutarlılık:** Kodun hangi elden çıktığı değil, projenin standartlarına ne kadar uyduğu önemlidir.
+2.  **Okunabilirlik:** "Kod bir kez yazılır, onlarca kez okunur." Prensibini unutmayın.
+3.  **Dokümantasyon:** Yeni bir özellik veya karmaşık bir yapı eklediğinizde, ilgili `.md` dosyasını güncellemeyi ihmal etmeyin.
+
+---
+
+## 🛠️ Geliştirme Ortamı
+
+Projeyi yerel ortamınızda ayağa kaldırmak için:
 
 ```bash
-npm run dev
-# veya
-yarn dev
-# veya
+# Bağımlılıkları yükleyin
+pnpm install
+
+# Geliştirme sunucusunu başlatın
 pnpm dev
-# veya
-bun dev
 ```
 
-Sonucu görmek için [http://localhost:3000](http://localhost:3000) adresini tarayıcınızla açın.
-
-Sayfayı düzenlemeye `app/page.tsx` dosyasını değiştirerek başlayabilirsiniz. Siz dosyayı düzenledikçe sayfa otomatik olarak güncellenir.
-
-Bu proje, Vercel için yeni bir yazı tipi ailesi olan [Geist](https://vercel.com/font)'i otomatik olarak optimize etmek ve yüklemek için [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) kullanır.
-
-## Daha Fazla Bilgi
-
-Next.js hakkında daha fazla bilgi edinmek için aşağıdaki kaynaklara göz atabilirsiniz:
-
-- [Next.js Documentation](https://nextjs.org/docs) - Next.js özellikleri ve API hakkında bilgi edinin.
-- [Next.js Öğren](https://nextjs.org/learn) - interaktif bir Next.js eğitimi.
-
-[Next.js GitHub deposuna](https://github.com/vercel/next.js) göz atabilirsiniz - geri bildirimlerinizi ve katkılarınızı bekliyoruz!
-
-## Vercel üzerinde dağıtın
-
-Next.js uygulamanızı dağıtmanın en kolay yolu Next.js'nin yaratıcılarının [Vercel Platformunu](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) kullanmaktır.
-
-Daha fazla ayrıntı için [Next.js dağıtım belgelerimize](https://nextjs.org/docs/app/building-your-application/deploying) göz atın.
+> **Not:** Eğer bu dokümanlarda eksik veya hatalı bir bilgi görürseniz, lütfen bir PR açarak güncellenmesine yardımcı olun. Birlikte daha iyiyiz! ⚡
